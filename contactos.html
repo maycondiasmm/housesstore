@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactos</title>
+    <link rel="stylesheet" href="css/CPraticojava.css">
+<script type="text/javascript">
+    setTimeout(function() {
+        alert('Bem-vindo ao nosso website!');
+    }, 5000);
+        let map, directionsService, directionsRenderer;
+
+function initMap() {
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+
+    const officeLocation = { lat: 38.73376520878317, lng: -9.141150730691137 }; 
+
+
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: officeLocation,
+        zoom: 14,
+    });
+
+    directionsRenderer.setMap(map);
+}
+function requestUserLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                const officeLocation = { lat: 38.733572717953415, lng:-9.141140002274987 };
+                calculateAndDisplayRoute(userLocation, officeLocation);
+            },
+            () => {
+                alert('Erro ao obter a localização. Verifique se o serviço de geolocalização está ativado.');
+            },
+        );
+    } else {
+        alert("Seu navegador não suporta geolocalização.");
+    }
+}
+
+function calculateAndDisplayRoute(userLocation, officeLocation) {
+    const request = {
+        origin: userLocation,
+        destination: officeLocation,
+        travelMode: google.maps.TravelMode.DRIVING,
+    };
+    directionsService.route(request, (result, status) => {
+        if (status === "OK") {
+            directionsRenderer.setDirections(result);
+        } else {
+            window.alert("Directions request failed due to " + status);
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
+    const messageContainer = document.getElementById('messageContainer');
+
+    form.addEventListener('submit', (event) => {
+        // Previne o envio do formulário se a validação falhar
+        if (!validateForm()) {
+            event.preventDefault();
+        } else {
+            // Se o formulário for válido, mostra uma mensagem de sucesso
+            event.preventDefault(); // Previne o envio real para fins de demonstração
+            showSuccessMessage();
+        }
+    });
+
+    function validateForm() {
+        const nome = document.getElementById('nome').value.trim();
+        const apelido = document.getElementById('apelido').value.trim();
+        const telemovel = document.getElementById('telemovel').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const data = document.getElementById('data').value.trim();
+        const motivo = document.getElementById('motivo').value.trim();
+
+        // Validação adicional se necessário
+        if (!nome || !apelido || !telemovel || !email || !data || !motivo) {
+            showErrorMessage('Todos os campos devem ser preenchidos!');
+            return false;
+        }
+
+        // Verificação do telefone (se for necessário)
+        const telPattern = /^[0-9]{9}$/;
+        if (!telPattern.test(telemovel)) {
+            showErrorMessage('O número de telemóvel deve conter exatamente 9 dígitos.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function showSuccessMessage() {
+        messageContainer.innerHTML = '<p class="success-message">Formulário enviado com sucesso!</p>';
+    }
+
+    function showErrorMessage(message) {
+        messageContainer.innerHTML = `<p class="error-message">${message}</p>`;
+    }
+});
+    </script>
+    <style>
+        #map {
+            position: relative;
+            width: 1250px;
+            height: 500px;
+        }
+    </style>
+
+</head>
+<header>
+    <nav class="navbar">
+        <ul>
+            <li><a href="CPratico.html">Início</a> </li>
+            <li><a href="portfolio.html">Portfólio</a></li>
+            <li> <a href="orcamento.html">Pedido de Orçamento</a> </li>
+            <li><a href="contactos.html">Contactos</a></li>
+        </ul>
+    </nav>
+</header>
+<body class="container">
+            <form id="contactForm">
+                <h1>Contactos</h1>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="apelido">Apelido:</label>
+                <input type="text" id="apelido" name="apelido" required>
+                <label for="telemovel">Telemóvel:</label>
+                <input type="tel" id="telemovel" name="telemovel" pattern="[0-9]{9}" placeholder="123456789" required>
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date" required>
+                <label for="motivo">Motivo do Contacto:</label>
+                <textarea id="motivo" name="motivo" rows="4" required></textarea>
+                <button type="submit" id="submitBtn">Enviar</button><br><br><br><br>
+            </form>
+            <button onclick="requestUserLocation()">Obter Minha Localização</button>
+    <div id="map"></div>
+    
+    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq4iEKqrcB0Bhg-qBIKq3840kwIi9JGqQ&loading=async&callback=initMap" async defer></script>
+</body>
+</html>

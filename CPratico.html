@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Casas Pré-Fabricadas</title>
+    <link rel="stylesheet" href="css/CPraticojava.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        setTimeout(function() {
+            alert('Bem-vindo ao nosso website!');
+        }, 5000);
+        function carregar() {
+            var url = 'https://news.google.com/rss?hl=ptPT&gl=PT&ceid=PT:pt-150';
+            var api_url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(url);
+
+            $.ajax({
+                url: api_url,
+                type: 'GET',
+                dataType: 'json', // Indica que a resposta deve ser interpretada como JSON
+                success: function(data) {
+                    var frase = "";
+                    if (data && data.items) {
+                        data.items.forEach(function(item) {
+                            frase += "Título: <b>" + item.title + "</b><br/>";
+                            frase += item.description + "<br/><br/>";
+                        });
+                    } else {
+                        frase = "Nenhuma notícia disponível.";
+                    }
+                    $("#caixa").html(frase);
+                },
+                error: function(xhr, status, error) {
+                    $("#caixa").html('Ocorreu um erro ao carregar as notícias.');
+                    console.error('Erro:', error);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="CPratico.html">Início</a> </li>
+                <li><a href="portfolio.html">Portfólio</a></li>
+                <li> <a href="orcamento.html">Pedido de Orçamento</a> </li>
+                <li><a href="contactos.html">Contactos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <aside class="sidebar">
+        <a  href="#" onclick="carregar()">Clique para ver as  notícias</a> 
+                <div id="caixa"> 
+                    As notícias vão ser carregadas nesta caixa. 
+                </div> 
+    </aside>
+    <main>
+        <h1 id="bemvindo">Bem-vindo ao nosso Website!</h1>
+        <h2>Casas de Madeira em Ascensão: Uma Tendência em Crescimento no Setor Imobiliário</h2>
+        <p>É muito interessante analizar o crescimento exponencial das casas de madeira pré-fabricadas, já que nos últimos anos tem-se observado um fenômeno marcante no mercado imobiliário: o boom das casas de madeira. Esta tendência, que ganhou impulso em várias regiões do mundo, está transformando a maneira como as pessoas encaram a construção e a aquisição de imóveis. Com sua estética natural, sustentabilidade e rapidez de construção, as casas de madeira pré-fabricadas estão se tornando uma opção cada vez mais popular entre os compradores em busca de uma moradia prática, bonita e ecológica.</p>
+        <h2>Sustentabilidade e Ecologia: Os Atributos das Casas de Madeira Pré-fabricadas</h2>
+        <p>Uma das principais razões por trás do crescimento deste mercado é a crescente preocupação com a sustentabilidade ambiental de empresas como a Pineca.pt. As casas de madeira são vistas como uma opção mais ecológica em comparação com as construções tradicionais, uma vez que a madeira pode ser um recurso renovável dependendo das políticas da empresa, e também que sua extração pode ser menos prejudicial ao meio ambiente quando é feito todo o reflorestamento. Além disso, o processo de fabricação das casas de madeira pré-fabricadas gera menos resíduos e consome menos energia, tornando-se uma escolha atraente para os consumidores conscientes.</p>
+        <h2>Rapidez e Eficiência: A Vantagem das Casas Pré-fabricadas de Madeira</h2>
+        <p>Outro fator que impulsiona o crescimento deste mercado é a rapidez com que as casas de madeira pré-fabricadas podem ser construídas. Ao contrário das construções convencionais, que muitas vezes podem levar meses ou até anos para serem concluídas, as casas pré-fabricadas de madeira podem ser montadas em questão de semanas. Isso não apenas reduz os custos de mão de obra e materiais, mas também permite que os compradores entrem em suas novas casas em um prazo muito mais curto, atendendo às demandas da vida moderna e as necessidades de criar ambientes novos que se adaptem a construções já existentes. </p>
+        <h2>Estilo e Personalização: A Beleza das Casas de Madeira</h2>
+        <p>Além de suas vantagens ambientais e de eficiência, as casas de madeira pré-fabricadas oferecem uma estética única e acolhedora que atrai muitos compradores. A beleza natural da madeira confere um charme rústico e elegante às residências, tornando-as acolhedoras e de muito charme aos olhos de quem adora uma decoração mais boho, algo em altas nos últimos anos. Além disso, as casas pré-fabricadas de madeira podem ser facilmente personalizadas para atender às preferências individuais dos compradores, desde o layout interno até os acabamentos exteriores, proporcionando uma experiência de moradia verdadeiramente única e sob medida.</p>
+        <h2>E a Tendência Apenas Começa a se Firmar</h2>
+        <p>O boom das casas de madeira pré-fabricadas representa não apenas uma mudança na indústria da construção, mas também uma mudança nos valores e preferências dos consumidores. Com sua combinação de sustentabilidade, eficiência e beleza estética, essas casas estão rapidamente se tornando a escolha preferida para aqueles que buscam uma alternativa moderna e ecológica no mercado imobiliário, além de dizer sobre a moda das casas e suas decorações. Menos impacto ambiental, uma construção alinha com a natureza e a volta do estilo rústico são as grandes pedidas do momento e parece que a modernização deste tipo de produto está fazendo com que essa demanda não deixe de crescer nos próximos anos.</p>
+    </main>
+    
+      
+</body>
+    

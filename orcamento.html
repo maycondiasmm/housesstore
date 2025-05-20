@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Orçamento</title>
+    <link rel="stylesheet" href="css/CPraticojava.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+setTimeout(function() {
+    alert('Bem-vindo ao nosso website!');
+}, 5000);
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('formOrcamento');
+    const pageType = document.getElementById('tipoPagina');
+    const months = document.getElementById('prazo');
+    const separators = document.querySelectorAll('input[name="separadores"]');
+    const totalCost = document.getElementById('orcamento');
+
+    function calculateTotal() {
+        let baseCost = parseFloat(pageType.value);
+        let discount = Math.min(months.value * 0.05, 0.20);
+        let separatorCost = Array.from(separators)
+                                .filter(separator => separator.checked)
+                                .reduce((sum, separator) => sum + parseFloat(separator.value), 0);
+        let total = baseCost + separatorCost;
+        total -= total * discount;
+        totalCost.value = total.toFixed(2);
+    }
+
+    form.addEventListener('change', calculateTotal);
+    form.addEventListener('input', calculateTotal);
+
+    // Calculate initial cost
+    calculateTotal();
+});
+    </script>
+
+</head>
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="CPratico.html">Início</a></li>
+                <li><a href="portfolio.html">Portfólio</a></li>
+                <li><a href="orcamento.html">Pedido de Orçamento</a></li>
+                <li><a href="contactos.html">Contactos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <body>
+        <div class="container-orcamento">
+            <form id="formOrcamento">
+                <h2>Dados</h2>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+                <label for="apelido">Apelido:</label>
+                <input type="text" id="apelido" name="apelido" required>
+                <label for="telemovel">Telemóvel:</label>
+                <input type="text" id="telemovel" name="telemovel" required>
+    
+                <h2>Pedido de orçamento</h2>
+                <label for="tipoPagina">Tipo de Casa:</label>
+                <select id="tipoPagina" name="tipoPagina">
+                    <option value="500">Casa térrea - 500€</option>
+                    <option value="1000">Sobrado - 1000€</option>
+                    <option value="1500">Tradicional - 1500€</option>
+                    <option value="2000">Moderno- 2000€</option>
+                </select>
+                <label for="prazo">Prazo em meses:</label>
+                <input type="number" id="prazo" name="prazo" required>
+    
+                <h3>Marque os separadores desejados</h3>
+                <input type="checkbox" id="quemSomos" name="separadores" value="400">
+                <label for="quemSomos">Quem somos</label>
+                <input type="checkbox" id="ondeEstamos" name="separadores" value="400">
+                <label for="ondeEstamos">Onde estamos</label>
+                <input type="checkbox" id="galeria" name="separadores" value="400">
+                <label for="galeria">Galeria de fotografias</label>
+                <input type="checkbox" id="ecommerce" name="separadores" value="400">
+                <label for="ecommerce">Contemporâneo</label>
+                <input type="checkbox" id="gestaoInterna" name="separadores" value="400">
+                <label for="gestaoInterna">Gestão interna</label>
+                <input type="checkbox" id="noticias" name="separadores" value="400">
+                <label for="noticias">Notícias</label>
+                <input type="checkbox" id="redesSociais" name="separadores" value="400">
+                <label for="redesSociais">Redes sociais</label>
+    
+                <h3>Orçamento estimado</h3>
+                <input type="text" id="orcamento" name="orcamento" readonly>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </body>
+    </html>
